@@ -21,7 +21,7 @@ app.get('/', (c) => {
   });
 });
 
-app.post('/create-table', async (c) => {
+app.post('/api/create-table', async (c) => {
   try {
     await pool.query(`CREATE TABLE IF NOT EXISTS test (id SERIAL PRIMARY KEY, name VARCHAR(255))`);
     return c.json({ ok: true, message: 'Table created' });
@@ -30,7 +30,7 @@ app.post('/create-table', async (c) => {
   }
 });
 
-app.post('/insert', async (c) => {
+app.post('/api/insert', async (c) => {
   try {
     const { name } = await c.req.json();
     await pool.query('INSERT INTO test (name) VALUES ($1)', [name]);
@@ -40,7 +40,7 @@ app.post('/insert', async (c) => {
   }
 });
 
-app.get('/data', async (c) => {
+app.get('/api/data', async (c) => {
   try {
     const result = await pool.query('SELECT * FROM test');
     return c.json({ ok: false, data: result.rows });
