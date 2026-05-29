@@ -14,7 +14,7 @@ const app = new Hono();
 
 app.use('*', cors({ origin: process.env.CORS_ORIGIN }));
 
-app.get('/', (c) => {
+app.get('/api', (c) => {
   return c.json({
     ok: true,
     message: 'Hello Hono!',

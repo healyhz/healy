@@ -9,13 +9,13 @@ root.innerHTML = `
 `;
 
 document.getElementById('createTable').addEventListener('click', async () => {
-  const response = await fetch(`${window.ENV.API_URL}/create-table`, { method: 'POST' });
+  const response = await fetch(`${window.ENV.API_URL}/api/create-table`, { method: 'POST' });
   const data = await response.json();
   document.getElementById('result').innerText = JSON.stringify(data, null, 2);
 });
 
 document.getElementById('insertData').addEventListener('click', async () => {
-  const response = await fetch(`${window.ENV.API_URL}/insert`, {
+  const response = await fetch(`${window.ENV.API_URL}/api/insert`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name: 'Test Name' }),
@@ -25,7 +25,7 @@ document.getElementById('insertData').addEventListener('click', async () => {
 });
 
 document.getElementById('getData').addEventListener('click', async () => {
-  const response = await fetch(`${window.ENV.API_URL}/data`);
+  const response = await fetch(`${window.ENV.API_URL}/api/data`);
   const data = await response.json();
   document.getElementById('result').innerText = JSON.stringify(data, null, 2);
 });
