@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "sh -c 'if [ \"$ENV\" = \"DEV\" ]; then exec nodemon --legacy-watch src/index.js; else exec node src/index.js; fi'"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.0.1",
+    "hono": "4.12.18",
+    "pg": "8.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.14"
+  }
+}

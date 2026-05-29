@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: .dockerfile
+    ports:
+      - '8000:3000'
+    environment:
+      - ENV=${ENV}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+
+  frontend:
+    profiles:
+      - PROD
+    build:
+      context: ./frontend
+      dockerfile: .dockerfile
+    depends_on:
+      - backend
