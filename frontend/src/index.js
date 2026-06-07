@@ -1,3 +1,5 @@
+import styles from './styles.module.css';
+
 const API_URL = window.ENV.API_URL;
 const LANDING_URL = window.ENV.LANDING_URL;
 
@@ -35,7 +37,7 @@ async function main() {
   root.innerHTML = `
     <div style="font-family:Arial,sans-serif;padding:2rem;max-width:800px;margin:0 auto">
       <h1 style="color:#183977">Backoffice</h1>
-      <p>Logged in as <strong>${user.email}</strong></p>
+      <p class=${styles.test}>Logged in as <strong>${user.email}</strong></p>
       <button id="logoutBtn" style="margin-top:1rem;padding:10px 20px;background:#183977;color:#fff;border:none;border-radius:6px;cursor:pointer">
         Logout
       </button>

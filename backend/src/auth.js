@@ -10,8 +10,8 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   advanced: {
     crossSubDomainCookies: {
-      enabled: !!process.env.COOKIE_DOMAIN,
-      domain: process.env.COOKIE_DOMAIN || undefined,
+      enabled: Boolean(process.env.COOKIE_DOMAIN),
+      ...(process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
     },
   },
 });
