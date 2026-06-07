@@ -1,13 +1,6 @@
 import { betterAuth } from 'better-auth';
-import { Pool } from 'pg';
-import { corsOrigins } from './config';
-
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-});
+import { pool } from './db.js';
+import { corsOrigins } from './config.js';
 
 export const auth = betterAuth({
   database: pool,

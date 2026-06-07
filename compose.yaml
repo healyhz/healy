@@ -1,10 +1,12 @@
 services:
   db:
     image: postgres:18-alpine
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    env_file: .env
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER} -d ${DB_NAME}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -12,19 +14,12 @@ services:
       dockerfile: .dockerfile
     ports:
       - '8000:3000'
+    env_file: .env
     environment:
-      - ENV=${ENV}
-      - APP_URL=${APP_URL}
-      - API_URL=${API_URL}
-      - LANDING_URL=${LANDING_URL}
-      - AUTH_SECRET=${AUTH_SECRET}
-      - COOKIE_DOMAIN=${COOKIE_DOMAIN}
       - DB_HOST=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   landing:
     build:
@@ -32,8 +27,7 @@ services:
       dockerfile: .dockerfile
     ports:
       - '8080:80'
-    environment:
-      - APP_URL=${APP_URL}
+    env_file: .env
     depends_on:
       - backend
 
@@ -45,5 +39,6 @@ services:
       dockerfile: .dockerfile
     ports:
       - '80:80'
+    env_file: .env
     depends_on:
       - backend
