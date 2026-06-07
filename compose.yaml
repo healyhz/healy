@@ -14,13 +14,28 @@ services:
       - '8000:3000'
     environment:
       - ENV=${ENV}
-      - CORS_ORIGIN=${CORS_ORIGIN}
+      - APP_URL=${APP_URL}
+      - API_URL=${API_URL}
+      - LANDING_URL=${LANDING_URL}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN}
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
+
+  landing:
+    build:
+      context: ./landing
+      dockerfile: .dockerfile
+    ports:
+      - '8080:80'
+    environment:
+      - APP_URL=${APP_URL}
+    depends_on:
+      - backend
 
   frontend:
     profiles:

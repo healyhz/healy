@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Healy — Вход в личный кабинет</title>
 <link rel="icon" type="image/png" href="assets/healy-favicon.png">
+<script src="config.js"></script>
 <style>
   :root {
     --cobalt: #183977;
@@ -212,6 +213,16 @@
   .screen { display: none; }
   .screen.active { display: block; }
 
+  /* Form-level error */
+  .form-err {
+    font-size: 13px; color: var(--danger);
+    background: rgba(200,50,50,0.07);
+    border: 1px solid rgba(200,50,50,0.2);
+    border-radius: 8px; padding: 10px 14px;
+    margin-bottom: 16px; display: none;
+  }
+  .form-err.active { display: block; }
+
   /* Mobile */
   @media (max-width: 600px) {
     .auth-shell { padding: 24px 16px; }
@@ -249,7 +260,8 @@
         <h2>С возвращением.</h2>
         <p class="sub">Войдите, чтобы посмотреть заказы и управлять подпиской.</p>
 
-        <form onsubmit="event.preventDefault(); alert('Демо: вход');">
+        <form id="loginForm">
+          <div class="form-err" id="loginError"></div>
           <div class="field">
             <label for="loginEmail">Email</label>
             <div class="input-wrap">
@@ -271,7 +283,7 @@
             </label>
             <a class="link" onclick="showScreen('forgot')">Забыли пароль?</a>
           </div>
-          <button type="submit" class="btn">Войти</button>
+          <button type="submit" class="btn" id="loginBtn">Войти</button>
         </form>
 
         <p class="switch-line">Ещё нет аккаунта? <a class="link" onclick="showScreen('register')">Создать</a></p>
@@ -282,7 +294,8 @@
         <h2>Создать аккаунт.</h2>
         <p class="sub">Понадобится для оформления заказа и доступа к личному кабинету.</p>
 
-        <form onsubmit="event.preventDefault(); showScreen('register-success');">
+        <form id="registerForm">
+          <div class="form-err" id="registerError"></div>
           <div class="row-2">
             <div class="field">
               <label for="regName">Имя</label>
@@ -396,8 +409,6 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const target = document.getElementById('screen-' + name);
     if (target) target.classList.add('active');
-
-    // Tabs visibility — only on login & register
     const tabsBar = document.getElementById('authTabs');
     if (name === 'login' || name === 'register') {
       tabsBar.style.display = '';
@@ -420,6 +431,84 @@
       ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18M10.6 10.6a3 3 0 0 0 4.2 4.2M9.4 5.6A10 10 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.3 4.1M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a10 10 0 0 0 4.2-.9"/></svg>'
       : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
   }
+
+  function setFormLoading(btnId, loading, originalText) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = loading;
+    if (loading) { btn.dataset.original = btn.textContent; btn.textContent = 'Загрузка…'; }
+    else { btn.textContent = originalText ?? btn.dataset.original; }
+  }
+  function showFormError(elId, message) {
+    const el = document.getElementById(elId);
+    el.textContent = message;
+    el.classList.add('active');
+  }
+  function clearFormError(elId) {
+    const el = document.getElementById(elId);
+    el.textContent = '';
+    el.classList.remove('active');
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearFormError('loginError');
+    setFormLoading('loginBtn', true);
+    try {
+      const res = await fetch(`${window.ENV.API_URL}/api/auth/sign-in/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: document.getElementById('loginEmail').value,
+          password: document.getElementById('loginPwd').value,
+        }),
+      });
+      if (res.ok) {
+        window.location.href = window.ENV.APP_URL;
+      } else {
+        const data = await res.json();
+        showFormError('loginError', data.message || 'Произошла ошибка. Попробуйте снова.');
+        setFormLoading('loginBtn', false, 'Войти');
+      }
+    } catch {
+      showFormError('loginError', 'Не удалось подключиться к серверу.');
+      setFormLoading('loginBtn', false, 'Войти');
+    }
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearFormError('registerError');
+    const btn = document.querySelector('#registerForm [type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Загрузка…';
+    try {
+      const firstName = document.getElementById('regName').value;
+      const lastName = document.getElementById('regSurname').value;
+      const res = await fetch(`${window.ENV.API_URL}/api/auth/sign-up/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`.trim(),
+          email: document.getElementById('regEmail').value,
+          password: document.getElementById('regPwd').value,
+        }),
+      });
+      if (res.ok) {
+        window.location.href = window.ENV.APP_URL;
+      } else {
+        const data = await res.json();
+        showFormError('registerError', data.message || 'Произошла ошибка. Попробуйте снова.');
+        btn.disabled = false;
+        btn.textContent = 'Создать аккаунт';
+      }
+    } catch {
+      showFormError('registerError', 'Не удалось подключиться к серверу.');
+      btn.disabled = false;
+      btn.textContent = 'Создать аккаунт';
+    }
+  });
 </script>
 
 </body>
