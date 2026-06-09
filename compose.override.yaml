@@ -4,6 +4,9 @@ services:
       - '5432:5432'
 
   backend:
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
+    ports:
+      - '8000:3000'
+
+  landing:
+    ports:
+      - '8080:80'
