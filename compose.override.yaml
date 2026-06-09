@@ -7,16 +7,3 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-
-  frontend:
-    build:
-      dockerfile: .dev.dockerfile
-      args:
-        - API_URL
-    ports:
-      - '3000:3000'
-    environment:
-      - API_URL=http://backend:3000
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules

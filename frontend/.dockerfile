@@ -5,7 +5,6 @@ COPY ./package.json ./
 COPY ./package-lock.json ./
 RUN npm ci
 COPY . .
-ARG API_URL
 RUN npm run build
 
 FROM nginx:stable-alpine
