@@ -7,7 +7,7 @@ docker compose down
 ```
 
 ```bash
-docker compose -f compose.yaml --profile prod up --build -d
+docker compose -f compose.yaml --profile prod up --build
 ```
 
 ```bash
