@@ -6,5 +6,6 @@
     "outDir": "dist",
     "sourceMap": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["drizzle.config.ts"]
 }

@@ -1,7 +1,6 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { getMigrations } from 'better-auth/db/migration';
 import { auth } from './auth.js';
 import { corsOrigins } from './config.js';
 
@@ -33,8 +32,5 @@ app.get('/api/config.js', (c) => {
   c.header('Cache-Control', 'no-store');
   return c.body(`window.ENV = ${JSON.stringify(config)};`);
 });
-
-const { runMigrations } = await getMigrations(auth.options);
-await runMigrations();
 
 serve(app);

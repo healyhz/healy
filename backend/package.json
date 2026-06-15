@@ -6,17 +6,21 @@
   "scripts": {
     "start": "tsx src/index.ts",
     "build": "tsc",
-    "prod": "node dist/index.js"
+    "prod": "node dist/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@hono/node-server": "2.0.1",
     "better-auth": "1.6.14",
+    "drizzle-orm": "0.45.2",
     "hono": "4.12.18",
     "pg": "8.20.0"
   },
   "devDependencies": {
     "@types/node": "25.9.3",
     "@types/pg": "8.20.0",
+    "drizzle-kit": "0.31.10",
     "tsx": "4.22.4",
     "typescript": "6.0.3"
   }

@@ -1,13 +1,16 @@
 import { betterAuth } from 'better-auth';
-import { pool } from './db.js';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { corsOrigins } from './config.js';
+import { admin } from 'better-auth/plugins';
+import { db } from './db/db.js';
 
 export const auth = betterAuth({
-  database: pool,
+  database: drizzleAdapter(db, { provider: 'pg' }),
   baseURL: process.env.API_URL,
   secret: process.env.AUTH_SECRET,
   trustedOrigins: corsOrigins,
   emailAndPassword: { enabled: true },
+  plugins: [admin()],
   advanced: {
     crossSubDomainCookies: {
       enabled: Boolean(process.env.COOKIE_DOMAIN),
