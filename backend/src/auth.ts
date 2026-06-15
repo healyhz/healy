@@ -3,9 +3,10 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { corsOrigins } from './config.js';
 import { admin } from 'better-auth/plugins';
 import { db } from './db.js';
+import * as schema from './schemas/auth-schema.js';
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, { provider: 'pg' }),
+  database: drizzleAdapter(db, { provider: 'pg', schema }),
   baseURL: process.env.API_URL,
   secret: process.env.AUTH_SECRET,
   trustedOrigins: corsOrigins,

@@ -1,9 +1,14 @@
 import { defineConfig } from 'drizzle-kit';
-import { dbCredentials } from '../src/config.js';
 
 export default defineConfig({
   schema: './src/schemas',
   out: './db/migrations',
   dialect: 'postgresql',
-  dbCredentials,
+  dbCredentials: {
+    host: process.env.DB_HOST!,
+    database: process.env.DB_NAME!,
+    user: process.env.DB_USER!,
+    password: process.env.DB_PASSWORD!,
+    ssl: false,
+  },
 });

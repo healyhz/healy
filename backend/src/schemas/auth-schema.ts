@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, boolean, index } from 'drizzle-orm/pg-core';
 
-export const userSchema = pgTable('user', {
+export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
@@ -18,7 +18,7 @@ export const userSchema = pgTable('user', {
   banExpires: timestamp('ban_expires'),
 });
 
-export const sessionSchema = pgTable(
+export const session = pgTable(
   'session',
   {
     id: text('id').primaryKey(),
@@ -32,13 +32,13 @@ export const sessionSchema = pgTable(
     userAgent: text('user_agent'),
     userId: text('user_id')
       .notNull()
-      .references(() => userSchema.id, { onDelete: 'cascade' }),
+      .references(() => user.id, { onDelete: 'cascade' }),
     impersonatedBy: text('impersonated_by'),
   },
   (table) => [index('session_userId_idx').on(table.userId)]
 );
 
-export const accountSchema = pgTable(
+export const account = pgTable(
   'account',
   {
     id: text('id').primaryKey(),
@@ -46,7 +46,7 @@ export const accountSchema = pgTable(
     providerId: text('provider_id').notNull(),
     userId: text('user_id')
       .notNull()
-      .references(() => userSchema.id, { onDelete: 'cascade' }),
+      .references(() => user.id, { onDelete: 'cascade' }),
     accessToken: text('access_token'),
     refreshToken: text('refresh_token'),
     idToken: text('id_token'),
@@ -62,7 +62,7 @@ export const accountSchema = pgTable(
   (table) => [index('account_userId_idx').on(table.userId)]
 );
 
-export const verificationSchema = pgTable(
+export const verification = pgTable(
   'verification',
   {
     id: text('id').primaryKey(),
@@ -78,21 +78,21 @@ export const verificationSchema = pgTable(
   (table) => [index('verification_identifier_idx').on(table.identifier)]
 );
 
-export const userRelations = relations(userSchema, ({ many }) => ({
-  sessions: many(sessionSchema),
-  accounts: many(accountSchema),
+export const userRelations = relations(user, ({ many }) => ({
+  sessions: many(session),
+  accounts: many(account),
 }));
 
-export const sessionRelations = relations(sessionSchema, ({ one }) => ({
-  user: one(userSchema, {
-    fields: [sessionSchema.userId],
-    references: [userSchema.id],
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, {
+    fields: [session.userId],
+    references: [user.id],
   }),
 }));
 
-export const accountRelations = relations(accountSchema, ({ one }) => ({
-  user: one(userSchema, {
-    fields: [accountSchema.userId],
-    references: [userSchema.id],
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, {
+    fields: [account.userId],
+    references: [user.id],
   }),
 }));

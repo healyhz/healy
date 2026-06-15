@@ -3,6 +3,8 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { auth } from './auth.js';
 import { corsOrigins } from './config.js';
+import products from './routes/products.js';
+import claimAdmin from './routes/claim-admin.js';
 
 const app = new Hono();
 
@@ -11,7 +13,7 @@ app.use(
   cors({
     origin: (origin) => (corsOrigins.includes(origin) ? origin : null),
     allowHeaders: ['Content-Type', 'Authorization'],
-    allowMethods: ['POST', 'GET', 'OPTIONS'],
+    allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
     exposeHeaders: ['Content-Length'],
     maxAge: 600,
     credentials: true,
@@ -19,6 +21,9 @@ app.use(
 );
 
 app.on(['POST', 'GET'], '/api/auth/*', (c) => auth.handler(c.req.raw));
+
+app.route('/api/products', products);
+app.route('/api/claim-admin', claimAdmin);
 
 app.get('/api', (c) => c.json({ ok: true }));
 
