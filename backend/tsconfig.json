@@ -7,5 +7,5 @@
     "sourceMap": true,
     "skipLibCheck": true
   },
-  "exclude": ["drizzle.config.ts"]
+  "exclude": ["db"]
 }
