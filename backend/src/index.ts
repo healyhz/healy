@@ -5,6 +5,8 @@ import { auth } from './auth.js';
 import { corsOrigins } from './config.js';
 import products from './routes/products.js';
 import claimAdmin from './routes/claim-admin.js';
+import adminRouter from './routes/admin.js';
+import partnerRouter from './routes/partner.js';
 
 const app = new Hono();
 
@@ -24,8 +26,8 @@ app.on(['POST', 'GET'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 app.route('/api/products', products);
 app.route('/api/claim-admin', claimAdmin);
-
-app.get('/api', (c) => c.json({ ok: true }));
+app.route('/api/admin', adminRouter);
+app.route('/api/partner', partnerRouter);
 
 app.get('/api/config.js', (c) => {
   const config = {
