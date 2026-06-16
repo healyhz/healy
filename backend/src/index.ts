@@ -7,6 +7,7 @@ import products from './routes/products.js';
 import claimAdmin from './routes/claim-admin.js';
 import adminRouter from './routes/admin.js';
 import partnerRouter from './routes/partner.js';
+import usersRouter from './routes/users.js';
 
 const app = new Hono();
 
@@ -24,6 +25,7 @@ app.use(
 
 app.on(['POST', 'GET'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
+app.route('/api/users', usersRouter);
 app.route('/api/products', products);
 app.route('/api/claim-admin', claimAdmin);
 app.route('/api/admin', adminRouter);

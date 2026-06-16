@@ -3,10 +3,9 @@ const LANDING_URL = window.ENV.LANDING_URL;
 
 async function checkAuth() {
   try {
-    const res = await fetch(`${API_URL}/api/auth/get-session`, { credentials: 'include' });
+    const res = await fetch(`${API_URL}/api/users/me`, { credentials: 'include' });
     if (!res.ok) return null;
-    const data = await res.json();
-    return data?.user ?? null;
+    return res.json();
   } catch {
     return null;
   }
