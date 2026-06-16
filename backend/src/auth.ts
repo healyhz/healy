@@ -13,6 +13,7 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   plugins: [admin()],
   advanced: {
+    database: { generateId: 'uuid' },
     crossSubDomainCookies: {
       enabled: Boolean(process.env.COOKIE_DOMAIN),
       ...(process.env.COOKIE_DOMAIN && { domain: process.env.COOKIE_DOMAIN }),
