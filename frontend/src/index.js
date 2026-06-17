@@ -18,7 +18,7 @@ async function logout() {
     headers: { 'Content-Type': 'application/json' },
     body: '{}',
   });
-  window.location.href = `${LANDING_URL}/login.html`;
+  window.location.href = `${LANDING_URL}/login`;
 }
 
 async function apiFetch(path, options = {}) {
@@ -121,7 +121,7 @@ async function main() {
 
   const user = await checkAuth();
   if (!user) {
-    window.location.href = `${LANDING_URL}/login.html`;
+    window.location.href = `${LANDING_URL}/login`;
     return;
   }
 
