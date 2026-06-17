@@ -1,0 +1,311 @@
+/* ---- Header ---- */
+.header {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: block;
+}
+
+.logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.back {
+  font-size: 13px;
+  color: var(--ink-3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.back:hover {
+  color: var(--cobalt);
+}
+
+/* ---- Shell ---- */
+.shell {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 56px 24px;
+  min-height: calc(100vh - 69px);
+  background: var(--bg-warm);
+}
+
+.formCol {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 48px 40px;
+  box-shadow: 0 1px 3px rgba(15, 37, 87, 0.04);
+}
+
+.panel {
+  width: 100%;
+}
+
+/* ---- Panel typography ---- */
+.panelTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cobalt);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--ink-3);
+  margin: 0 0 32px;
+  line-height: 1.55;
+}
+
+/* ---- Tabs ---- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-warm);
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 32px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.tab:global(.active) {
+  background: #fff;
+  color: var(--cobalt);
+  box-shadow: 0 1px 3px rgba(15, 37, 87, 0.08);
+}
+
+.tab:hover:not(:global(.active)) {
+  color: var(--ink-1);
+}
+
+/* ---- Fields ---- */
+.field {
+  margin-bottom: 18px;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-2);
+  margin-bottom: 6px;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-1);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: border 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--ink-4);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--pacific);
+  box-shadow: 0 0 0 3px rgba(0, 173, 204, 0.12);
+}
+
+.inputHasIcon {
+  padding-right: 44px;
+}
+
+.pwdToggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  color: var(--ink-4);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.pwdToggle:hover {
+  color: var(--cobalt);
+  background: var(--bg-warm);
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--ink-4);
+  margin-top: 6px;
+}
+
+/* ---- Form error ---- */
+.formErr {
+  font-size: 13px;
+  color: var(--danger, #c83232);
+  background: rgba(200, 50, 50, 0.07);
+  border: 1px solid rgba(200, 50, 50, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+/* ---- Row helpers ---- */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 24px;
+  font-size: 13px;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--ink-2);
+}
+
+.check input {
+  accent-color: var(--cobalt);
+  cursor: pointer;
+}
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: inherit;
+  color: var(--pacific-dark);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ---- Submit button ---- */
+.submitBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ---- Post-form ---- */
+.switchLine {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-3);
+  margin-top: 24px;
+}
+
+.terms {
+  font-size: 11px;
+  color: var(--ink-4);
+  line-height: 1.5;
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.terms a {
+  color: var(--pacific-dark);
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Success state ---- */
+.successState {
+  text-align: center;
+  padding: 8px 0 0;
+}
+
+.checkIcon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--pacific-tint);
+  color: var(--cobalt);
+  display: grid;
+  place-items: center;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .header {
+    padding: 14px 20px;
+  }
+
+  .back span {
+    display: none;
+  }
+
+  .shell {
+    padding: 24px 16px;
+    place-items: start center;
+  }
+
+  .formCol {
+    padding: 32px 24px;
+  }
+
+  .panelTitle {
+    font-size: 24px;
+  }
+
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+}

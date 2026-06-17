@@ -1,0 +1,62 @@
+---
+import styles from "./styles.module.css";
+---
+
+<section class={styles.hero}>
+  <div class:list={["container", styles.grid]}>
+    <div class="reveal">
+      <span class="eyebrow">Healy в России</span>
+      <h1>Носимое устройство для гармонии и баланса.</h1>
+      <p class:list={["lede", styles.sub]}>
+        Healy Wellness — частотные программы для релаксации, фитнеса и энергии.
+        Для тех, кто заботится о своём состоянии и встраивает практики в обычный день.
+      </p>
+      <div class={styles.cta}>
+        <a href="#catalog" class="btn btn-lg">
+          Перейти в каталог
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14m-6-6 6 6-6 6"></path>
+          </svg>
+        </a>
+        <a href="#how" class="btn btn-outline btn-lg">Как это работает</a>
+      </div>
+      <div class={styles.trust}>
+        <span class={styles.trustItem}>
+          <span class={styles.trustIcon}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="m5 12 5 5L20 7"></path>
+            </svg>
+          </span>
+          Официальный дистрибьютор
+        </span>
+        <span class={styles.trustItem}>
+          <span class={styles.trustIcon}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="m5 12 5 5L20 7"></path>
+            </svg>
+          </span>
+          Доставка СДЭК по России
+        </span>
+        <span class={styles.trustItem}>
+          <span class={styles.trustIcon}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="m5 12 5 5L20 7"></path>
+            </svg>
+          </span>
+          Гарантия 2 года
+        </span>
+        <span class={styles.trustItem}>
+          <span class={styles.trustIcon}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="m5 12 5 5L20 7"></path>
+            </svg>
+          </span>
+          Поддержка на русском
+        </span>
+      </div>
+    </div>
+    <div class:list={[styles.media, "reveal"]} role="img" aria-label="Healy Wellness">
+      <img src="/assets/healy-wellness.png" alt="Healy Wellness" />
+    </div>
+  </div>
+</section>

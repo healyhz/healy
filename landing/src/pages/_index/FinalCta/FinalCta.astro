@@ -1,0 +1,22 @@
+---
+import styles from "./styles.module.css";
+---
+
+<section class={styles.section}>
+  <div class="container">
+    <div class:list={[styles.box, "reveal"]}>
+      <span class="eyebrow" style="justify-content: center;">Начните</span>
+      <h2>Готовы выбрать своё устройство?</h2>
+      <p class="lede">Перейдите в каталог или свяжитесь с нами — поможем подобрать комплект.</p>
+      <div class={styles.ctaRow}>
+        <a href="#catalog" class="btn btn-lg">
+          В каталог
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14m-6-6 6 6-6 6"></path>
+          </svg>
+        </a>
+        <a href="#contacts" class="btn btn-outline btn-lg">Связаться с нами</a>
+      </div>
+    </div>
+  </div>
+</section>

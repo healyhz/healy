@@ -1,0 +1,22 @@
+{
+  "name": "healy-landing",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.9",
+    "astro": "6.4.8",
+    "autoprefixer": "10.5.0",
+    "typescript": "6.0.3"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  }
+}

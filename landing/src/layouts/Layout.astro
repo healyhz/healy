@@ -1,0 +1,160 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/png" href="/assets/healy-favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/healy-favicon.ico" />
+    <link rel="apple-touch-icon" href="/assets/healy-favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+
+    <div class="sticky-cta">
+      <a href="#catalog" class="btn">
+        В каталог
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14m-6-6 6 6-6 6"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+      <p>
+        Мы используем cookie для улучшения работы сайта и аналитики. Продолжая, вы соглашаетесь с
+        <a href="#">политикой обработки персональных данных</a>.
+      </p>
+      <div class="cookie-actions">
+        <button class="btn btn-outline btn-sm" id="cookieCustomize">Настроить</button>
+        <button class="btn btn-sm" id="cookieAccept">Принять</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    display: none;
+    z-index: 90;
+    box-shadow: 0 -8px 24px -12px rgba(15, 37, 87, 0.15);
+  }
+
+  .cookie-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 24px 48px -16px rgba(15, 37, 87, 0.2);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 200;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+
+  .cookie-banner.hidden {
+    display: none;
+  }
+
+  .cookie-banner p {
+    margin: 0;
+    flex: 1;
+  }
+
+  .cookie-banner a {
+    color: var(--pacific-dark);
+    text-decoration: underline;
+  }
+
+  .cookie-banner .cookie-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .sticky-cta {
+      display: block;
+    }
+
+    .cookie-banner {
+      bottom: 80px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cookie-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      left: 12px;
+      right: 12px;
+      bottom: 84px;
+      padding: 16px;
+    }
+  }
+</style>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  const banner = document.getElementById("cookieBanner");
+  if (banner && localStorage.getItem("healy_cookie") === "1") {
+    banner.classList.add("hidden");
+  }
+
+  document.getElementById("cookieAccept")?.addEventListener("click", () => {
+    localStorage.setItem("healy_cookie", "1");
+    document.getElementById("cookieBanner")?.classList.add("hidden");
+  });
+
+  document.getElementById("cookieCustomize")?.addEventListener("click", () => {
+    document.getElementById("cookieBanner")?.classList.add("hidden");
+  });
+</script>

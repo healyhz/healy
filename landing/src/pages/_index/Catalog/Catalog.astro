@@ -1,0 +1,83 @@
+---
+import styles from "./styles.module.css";
+---
+
+<section class={styles.section} id="catalog">
+  <div class="container">
+    <div class:list={["section-head row reveal", styles.head]}>
+      <div>
+        <span class="eyebrow">Ключевые продукты</span>
+        <h2>Healy Wellness — линейка.</h2>
+      </div>
+      <a href="#" class="btn btn-outline">Весь каталог →</a>
+    </div>
+    <div class:list={[styles.grid, "reveal"]}>
+
+      <a href="#" class={styles.card}>
+        <div class={styles.cardMedia}>
+          <span class={styles.tag}>Хит</span>
+          <img class={styles.photo} src="/assets/healy-wellness.png" alt="Healy Wellness" />
+        </div>
+        <div class={styles.cardBody}>
+          <h3>Healy Wellness</h3>
+          <p class={styles.desc}>Базовая модель: компактное устройство и набор частотных программ для гармонии и баланса.</p>
+          <div class={styles.foot}>
+            <div class={styles.price}>149 000<span class={styles.currency}>₽</span></div>
+            <div class={styles.actions}>
+              <button class:list={["btn", styles.btnCart]} data-cart-id="wellness">В корзину</button>
+              <span class={styles.btnIcon} aria-label="Подробнее">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14m-6-6 6 6-6 6"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class={styles.card}>
+        <div class:list={[styles.cardMedia, styles.cardMediaDark]}>
+          <span class:list={[styles.tag, styles.tagPacific]}>Premium</span>
+          <img class={styles.photo} src="/assets/healy-wellness.png" alt="Healy Obsidian" />
+        </div>
+        <div class={styles.cardBody}>
+          <h3>Healy Obsidian</h3>
+          <p class={styles.desc}>Премиальное исполнение в чёрном корпусе. Тот же функционал в более выразительном дизайне.</p>
+          <div class={styles.foot}>
+            <div class={styles.price}>199 000<span class={styles.currency}>₽</span></div>
+            <div class={styles.actions}>
+              <button class:list={["btn", styles.btnCart]} data-cart-id="obsidian">В корзину</button>
+              <span class={styles.btnIcon} aria-label="Подробнее">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14m-6-6 6 6-6 6"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class={styles.card}>
+        <div class={styles.cardMedia}>
+          <img class={styles.photo} src="/assets/healy-wellness.png" alt="MagHealy" />
+        </div>
+        <div class={styles.cardBody}>
+          <h3>MagHealy</h3>
+          <p class={styles.desc}>Магнитные программы для гармонизации Биоэнергетического поля. Полностью совместим с приложением Healy.</p>
+          <div class={styles.foot}>
+            <div class={styles.price}>259 000<span class={styles.currency}>₽</span></div>
+            <div class={styles.actions}>
+              <button class:list={["btn", styles.btnCart]} data-cart-id="maghealy">В корзину</button>
+              <span class={styles.btnIcon} aria-label="Подробнее">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14m-6-6 6 6-6 6"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>

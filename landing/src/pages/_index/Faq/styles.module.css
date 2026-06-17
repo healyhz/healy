@@ -1,0 +1,160 @@
+.section {
+  padding: 100px 0;
+  background: var(--bg-cream);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 56px;
+  align-items: flex-start;
+}
+
+.list {
+  border-top: 1px solid var(--line);
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+}
+
+.item a {
+  color: var(--pacific-dark);
+  text-decoration: underline;
+}
+
+.item[open] .chevron {
+  background: var(--cobalt);
+  color: #fff;
+}
+
+.item[open] .chevron svg {
+  transform: rotate(45deg);
+}
+
+.question {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 26px 0;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cobalt);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--sans);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.question::-webkit-details-marker {
+  display: none;
+}
+
+.chevron {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--cobalt);
+  color: var(--cobalt);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, color 0.2s;
+}
+
+.chevron svg {
+  transition: transform 0.25s ease;
+}
+
+.answer {
+  padding: 0 0 26px;
+  font-size: 15px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 780px;
+}
+
+.side {
+  background: var(--bg-warm);
+  border-radius: 12px;
+  padding: 36px;
+  position: sticky;
+  top: 140px;
+}
+
+.side h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.side p {
+  font-size: 14px;
+  color: var(--ink-3);
+  margin: 0 0 24px;
+  line-height: 1.55;
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: all 0.18s;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.channel:hover {
+  border-color: var(--cobalt);
+  color: var(--cobalt);
+  transform: translateX(3px);
+}
+
+.channelIcon {
+  width: 32px;
+  height: 32px;
+  background: var(--pacific-tint);
+  color: var(--cobalt);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.channelMeta {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-4);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+@media (max-width: 1100px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .side {
+    position: static;
+  }
+}
