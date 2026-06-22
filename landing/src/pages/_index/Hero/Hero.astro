@@ -1,5 +1,7 @@
 ---
 import styles from "./styles.module.css";
+import ArrowRight from '../../../assets/icons/arrow-right.svg';
+import CheckIcon from '../../../assets/icons/check.svg';
 ---
 
 <section class={styles.hero}>
@@ -14,42 +16,32 @@ import styles from "./styles.module.css";
       <div class={styles.cta}>
         <a href="#catalog" class="btn btn-lg">
           Перейти в каталог
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M5 12h14m-6-6 6 6-6 6"></path>
-          </svg>
+          <ArrowRight class="arrow" />
         </a>
         <a href="#how" class="btn btn-outline btn-lg">Как это работает</a>
       </div>
       <div class={styles.trust}>
         <span class={styles.trustItem}>
           <span class={styles.trustIcon}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon width="12" height="12" stroke-width="3" />
           </span>
           Официальный дистрибьютор
         </span>
         <span class={styles.trustItem}>
           <span class={styles.trustIcon}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon width="12" height="12" stroke-width="3" />
           </span>
           Доставка СДЭК по России
         </span>
         <span class={styles.trustItem}>
           <span class={styles.trustIcon}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon width="12" height="12" stroke-width="3" />
           </span>
           Гарантия 2 года
         </span>
         <span class={styles.trustItem}>
           <span class={styles.trustIcon}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon width="12" height="12" stroke-width="3" />
           </span>
           Поддержка на русском
         </span>

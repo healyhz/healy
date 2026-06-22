@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ArrowRight from '../assets/icons/arrow-right.svg';
 
 interface Props {
   title: string;
@@ -36,17 +37,7 @@ const configScript = await fetch(`${apiUrl}/api/config.js`).then((r) => r.text()
     <div class="sticky-cta">
       <a href="#catalog" class="btn">
         В каталог
-        <svg
-          class="arrow"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M5 12h14m-6-6 6 6-6 6"></path>
-        </svg>
+        <ArrowRight class="arrow" />
       </a>
     </div>
 

@@ -1,5 +1,7 @@
 ---
 import styles from "./styles.module.css";
+import CartIcon from '../../assets/icons/cart.svg';
+import UserIcon from '../../assets/icons/user.svg';
 ---
 
 <header class={styles.header}>
@@ -15,17 +17,11 @@ import styles from "./styles.module.css";
     </nav>
     <div class={styles.cta}>
       <button type="button" class={styles.icon} id="cartTrigger" aria-label="Корзина">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 18L5 7Z"></path>
-          <path d="M9 7V5a3 3 0 0 1 6 0v2"></path>
-        </svg>
+        <CartIcon />
         <span class="cart-count" id="cartCount">0</span>
       </button>
       <a href="/login" class={styles.login} aria-label="Войти">
-        <svg class={styles.loginIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="8" r="4"></circle>
-          <path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path>
-        </svg>
+        <UserIcon class={styles.loginIcon} />
         <span class={styles.loginText}>Войти</span>
       </a>
     </div>

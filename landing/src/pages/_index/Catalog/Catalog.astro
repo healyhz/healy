@@ -1,6 +1,7 @@
 ---
 import type { Products } from '../../../types/products';
 import styles from './styles.module.css';
+import ArrowRight from '../../../assets/icons/arrow-right.svg';
 
 interface Props {
   products: Products;
@@ -38,16 +39,7 @@ const { products } = Astro.props;
                     В корзину
                   </button>
                   <span class={styles.btnIcon} aria-label="Подробнее">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d="M5 12h14m-6-6 6 6-6 6" />
-                    </svg>
+                    <ArrowRight />
                   </span>
                 </div>
               </div>

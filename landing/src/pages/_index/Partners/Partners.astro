@@ -1,5 +1,8 @@
 ---
 import styles from "./styles.module.css";
+import CheckIcon from '../../../assets/icons/check.svg';
+import ArrowRight from '../../../assets/icons/arrow-right.svg';
+import PartnersDeco from '../../../assets/icons/partners-deco.svg';
 ---
 
 <section class={styles.section} id="partners">
@@ -14,42 +17,28 @@ import styles from "./styles.module.css";
         </p>
         <ul class={styles.bullets}>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon />
             Личный кабинет со статистикой и аналитикой
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon />
             Поддержка персонального менеджера
           </li>
           <li>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="m5 12 5 5L20 7"></path>
-            </svg>
+            <CheckIcon />
             Выплаты на карту, без ограничения по объёму
           </li>
         </ul>
         <div class={styles.ctaRow}>
           <a href="#" class="btn btn-pacific">
             Узнать больше
-            <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14m-6-6 6 6-6 6"></path>
-            </svg>
+            <ArrowRight class="arrow" />
           </a>
           <a href="#" class="btn btn-light">Стать партнёром</a>
         </div>
       </div>
       <div class={styles.deco}>
-        <svg class={styles.decoBg} viewBox="0 0 400 500" fill="none" preserveAspectRatio="none" aria-hidden="true">
-          <circle cx="320" cy="100" r="180" stroke="rgba(0,173,204,0.35)" stroke-width="1"></circle>
-          <circle cx="320" cy="100" r="120" stroke="rgba(255,255,255,0.12)" stroke-width="1"></circle>
-          <path d="M0 380 Q100 350 200 380 T400 380" stroke="rgba(0,173,204,0.6)" stroke-width="1.2"></path>
-          <path d="M0 410 Q100 380 200 410 T400 410" stroke="rgba(0,173,204,0.3)" stroke-width="1"></path>
-          <path d="M0 440 Q100 410 200 440 T400 440" stroke="rgba(0,173,204,0.18)" stroke-width="1"></path>
-        </svg>
+        <PartnersDeco class={styles.decoBg} />
         <div class={styles.decoNumbers}>
           <div class={styles.decoStat}>
             <div class={styles.decoN}>10—<span class={styles.decoAcc}>25%</span></div>

@@ -1,6 +1,8 @@
 ---
 import type { Products } from '../../types/products';
 import styles from './styles.module.css';
+import CloseIcon from '../../assets/icons/close.svg';
+import CartIcon from '../../assets/icons/cart.svg';
 
 interface Props {
   products: Products;
@@ -18,32 +20,13 @@ const productsMap = Object.fromEntries(
   <div class={styles.head}>
     <h3>Корзина <span class={styles.cnt} id="cartCnt">0 товаров</span></h3>
     <button class={styles.close} id="cartClose" aria-label="Закрыть">
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5"
-      >
-        <path d="M6 6l12 12M18 6L6 18"></path>
-      </svg>
+      <CloseIcon />
     </button>
   </div>
   <div class={styles.body} id="cartBody">
     <div class={styles.empty} id="cartEmpty">
       <div class={styles.emptyIcon}>
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 18L5 7Z"></path>
-          <path d="M9 7V5a3 3 0 0 1 6 0v2"></path>
-        </svg>
+        <CartIcon width="32" height="32" stroke-width="1.5" />
       </div>
       <p>В корзине пока пусто.<br />Добавьте товар из каталога.</p>
       <a href="#catalog" class="btn btn-outline" data-close-cart>Перейти в каталог</a>

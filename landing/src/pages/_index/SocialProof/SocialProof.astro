@@ -1,5 +1,9 @@
 ---
 import styles from "./styles.module.css";
+import DocumentIcon from '../../../assets/icons/document.svg';
+import CertificateIcon from '../../../assets/icons/certificate.svg';
+import ShieldWarrantyIcon from '../../../assets/icons/shield-warranty.svg';
+import NewspaperIcon from '../../../assets/icons/newspaper.svg';
 ---
 
 <section class={styles.section}>
@@ -10,36 +14,25 @@ import styles from "./styles.module.css";
     </div>
     <div class:list={[styles.grid, "reveal"]}>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="8" y="6" width="28" height="32" rx="2"></rect>
-          <path d="M14 16h16M14 22h16M14 28h10"></path>
-        </svg>
+        <DocumentIcon class={styles.icon} />
         <h4>Декларация соответствия</h4>
         <p>Соответствие требованиям Таможенного союза для устройств бытового назначения.</p>
         <a href="#">Открыть PDF →</a>
       </div>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="22" cy="22" r="14"></circle>
-          <path d="M16 23l4 4 8-10"></path>
-        </svg>
+        <CertificateIcon class={styles.icon} />
         <h4>Сертификат производителя</h4>
         <p>Healy World — производитель в Hannover, Germany. Серийный номер каждого устройства.</p>
         <a href="#">Открыть PDF →</a>
       </div>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M22 6 14 10v8c0 7 4 12 8 14 4-2 8-7 8-14v-8L22 6z"></path>
-        </svg>
+        <ShieldWarrantyIcon class={styles.icon} />
         <h4>Гарантия производителя</h4>
         <p>2 года официальной гарантии. Условия и порядок обслуживания — в документе.</p>
         <a href="#">Открыть PDF →</a>
       </div>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="6" y="14" width="32" height="20" rx="2"></rect>
-          <path d="M14 14V8h16v6M16 24h12M16 28h8"></path>
-        </svg>
+        <NewspaperIcon class={styles.icon} />
         <h4>Упоминания в прессе</h4>
         <p>Healy World в международных публикациях о wellness-технологиях.</p>
         <a href="#">Подборка →</a>

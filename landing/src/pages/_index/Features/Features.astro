@@ -1,5 +1,9 @@
 ---
 import styles from "./styles.module.css";
+import PulseIcon from '../../../assets/icons/pulse.svg';
+import PhoneIcon from '../../../assets/icons/phone.svg';
+import ClockIcon from '../../../assets/icons/clock.svg';
+import ShieldIcon from '../../../assets/icons/shield.svg';
 ---
 
 <section class={styles.section} id="about">
@@ -11,38 +15,28 @@ import styles from "./styles.module.css";
     <div class:list={[styles.grid, "reveal"]}>
       <div class={styles.card}>
         <div class={styles.icon}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M3 12h3l3-7 4 14 3-7h5"></path>
-          </svg>
+          <PulseIcon />
         </div>
         <h3>Частотные программы</h3>
         <p>Программы для релаксации, фитнеса и энергии — настраиваются через приложение Healy.</p>
       </div>
       <div class={styles.card}>
         <div class={styles.icon}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <rect x="7" y="2" width="10" height="20" rx="2"></rect>
-            <path d="M11 18h2"></path>
-          </svg>
+          <PhoneIcon />
         </div>
         <h3>iOS и Android</h3>
         <p>Управление через Healy App. Подключение по Bluetooth, история сессий, выбор программ.</p>
       </div>
       <div class={styles.card}>
         <div class={styles.icon}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="12" cy="12" r="9"></circle>
-            <path d="M12 7v5l3 2"></path>
-          </svg>
+          <ClockIcon />
         </div>
         <h3>Сессия фоном</h3>
         <p>20–60 минут в обычном режиме дня. Healy крепится на одежду и не требует отдельного времени.</p>
       </div>
       <div class={styles.card}>
         <div class={styles.icon}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4Z"></path>
-          </svg>
+          <ShieldIcon />
         </div>
         <h3>Гарантия 2 года</h3>
         <p>Официальная гарантия от производителя. Поддержка на русском, доставка СДЭК по России.</p>

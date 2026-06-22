@@ -1,5 +1,8 @@
 ---
 import styles from "./styles.module.css";
+import HomeIcon from '../../../assets/icons/home.svg';
+import BriefcaseIcon from '../../../assets/icons/briefcase.svg';
+import GlobeIcon from '../../../assets/icons/globe.svg';
 ---
 
 <section class={styles.section}>
@@ -10,27 +13,17 @@ import styles from "./styles.module.css";
     </div>
     <div class:list={[styles.grid, "reveal"]}>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M10 26 28 12l18 14v20a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V26Z"></path>
-          <path d="M22 48V34h12v14"></path>
-        </svg>
+        <HomeIcon class={styles.icon} />
         <h3>Дома</h3>
         <p>Для личной практики — вечернее восстановление, релаксация после рабочего дня, поддержка энергии с утра.</p>
       </div>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="8" y="16" width="40" height="28" rx="3"></rect>
-          <path d="M20 16v-4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"></path>
-          <path d="M8 28h40"></path>
-        </svg>
+        <BriefcaseIcon class={styles.icon} />
         <h3>В работе с клиентами</h3>
         <p>Для коучей, нутрициологов, массажистов и практиков wellness — дополнение к вашей регулярной сессии.</p>
       </div>
       <div class={styles.card}>
-        <svg class={styles.icon} viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="28" cy="28" r="20"></circle>
-          <path d="M8 28h40M28 8c5 6 8 13 8 20s-3 14-8 20c-5-6-8-13-8-20s3-14 8-20z"></path>
-        </svg>
+        <GlobeIcon class={styles.icon} />
         <h3>В дороге</h3>
         <p>Компактное устройство помещается в карман — оставайтесь в своём ритме в командировках, путешествиях и на природе.</p>
       </div>
