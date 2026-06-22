@@ -7,8 +7,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM node:26-alpine
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./
 
-COPY --from=builder /app/dist /usr/share/nginx/html/
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "serve"]

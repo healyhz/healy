@@ -1,5 +1,16 @@
 ---
-import styles from "./styles.module.css";
+import type { Products } from '../../types/products';
+import styles from './styles.module.css';
+
+interface Props {
+  products: Products;
+}
+
+const { products } = Astro.props;
+
+const productsMap = Object.fromEntries(
+  products.map((p) => [p.slug, { name: p.name, price: p.price, img: '/assets/healy-wellness.png' }])
+);
 ---
 
 <div class={styles.overlay} id="cartOverlay"></div>
@@ -7,7 +18,14 @@ import styles from "./styles.module.css";
   <div class={styles.head}>
     <h3>Корзина <span class={styles.cnt} id="cartCnt">0 товаров</span></h3>
     <button class={styles.close} id="cartClose" aria-label="Закрыть">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
         <path d="M6 6l12 12M18 6L6 18"></path>
       </svg>
     </button>
@@ -15,7 +33,14 @@ import styles from "./styles.module.css";
   <div class={styles.body} id="cartBody">
     <div class={styles.empty} id="cartEmpty">
       <div class={styles.emptyIcon}>
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
           <path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 18L5 7Z"></path>
           <path d="M9 7V5a3 3 0 0 1 6 0v2"></path>
         </svg>
@@ -26,7 +51,9 @@ import styles from "./styles.module.css";
   </div>
   <div class={styles.foot} id="cartFoot" style="display:none">
     <div class={styles.footRow}><span>Подытог</span><span id="cartSubtotal">0 ₽</span></div>
-    <div class={styles.footRow}><span>Доставка СДЭК</span><span>рассчитывается на оформлении</span></div>
+    <div class={styles.footRow}>
+      <span>Доставка СДЭК</span><span>рассчитывается на оформлении</span>
+    </div>
     <div class:list={[styles.footRow, styles.footTotal]}>
       <span>К оплате</span><span class={styles.totalVal} id="cartTotal">0 ₽</span>
     </div>
@@ -35,75 +62,68 @@ import styles from "./styles.module.css";
   </div>
 </aside>
 
-<script>
-  const PRODUCTS: Record<string, { name: string; price: number; img: string; meta: string }> = {
-    wellness: { name: "Healy Wellness", price: 149000, img: "/assets/healy-wellness.png", meta: "Базовая модель" },
-    obsidian: { name: "Healy Obsidian", price: 199000, img: "/assets/healy-wellness.png", meta: "Premium" },
-    maghealy: { name: "MagHealy", price: 259000, img: "/assets/healy-wellness.png", meta: "Магнитный модуль" },
-  };
+<script define:vars={{ productsMap }} is:inline>
+  const PRODUCTS = productsMap;
 
-  let cart: Record<string, number> = JSON.parse(localStorage.getItem("healy_cart") || "{}");
+  let cart = JSON.parse(localStorage.getItem('healy_cart') || '{}');
 
   function saveCart() {
-    localStorage.setItem("healy_cart", JSON.stringify(cart));
+    localStorage.setItem('healy_cart', JSON.stringify(cart));
   }
 
-  function fmt(n: number) {
-    return n.toLocaleString("ru-RU") + " ₽";
+  function fmt(n) {
+    return n.toLocaleString('ru-RU') + ' ₽';
   }
 
-  function plural(n: number) {
+  function plural(n) {
     const m10 = n % 10,
       m100 = n % 100;
-    if (m10 === 1 && m100 !== 11) return n + " товар";
-    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return n + " товара";
-    return n + " товаров";
+    if (m10 === 1 && m100 !== 11) return n + ' товар';
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return n + ' товара';
+    return n + ' товаров';
   }
 
   function renderCart() {
-    const body = document.getElementById("cartBody")!;
-    const foot = document.getElementById("cartFoot")!;
-    const empty = document.getElementById("cartEmpty")!;
-    const cnt = document.getElementById("cartCnt")!;
+    const body = document.getElementById('cartBody');
+    const foot = document.getElementById('cartFoot');
+    const empty = document.getElementById('cartEmpty');
+    const cnt = document.getElementById('cartCnt');
     const ids = Object.keys(cart);
-    const totalQty = ids.reduce((s, k) => s + cart[k]!, 0);
+    const totalQty = ids.reduce((s, k) => s + cart[k], 0);
 
-    const badge = document.getElementById("cartCount");
-    if (badge) {
-      badge.textContent = String(totalQty);
-    }
+    const badge = document.getElementById('cartCount');
+    if (badge) badge.textContent = String(totalQty);
     cnt.textContent = plural(totalQty);
 
-    body.querySelectorAll("[data-cart-item]").forEach((n) => n.remove());
+    body.querySelectorAll('[data-cart-item]').forEach((n) => n.remove());
 
     if (ids.length === 0) {
-      (empty as HTMLElement).style.display = "block";
-      (foot as HTMLElement).style.display = "none";
+      empty.style.display = 'block';
+      foot.style.display = 'none';
       return;
     }
 
-    (empty as HTMLElement).style.display = "none";
-    (foot as HTMLElement).style.display = "block";
+    empty.style.display = 'none';
+    foot.style.display = 'block';
 
     let subtotal = 0;
     ids.forEach((id) => {
       const p = PRODUCTS[id];
       if (!p) return;
-      const q = cart[id]!;
+      const q = cart[id];
       subtotal += p.price * q;
 
-      const div = document.createElement("div");
+      const div = document.createElement('div');
       div.dataset.cartItem = id;
-      div.className = "cart-item-el";
+      div.className = 'cart-item-el';
       div.style.cssText =
-        "display:flex;gap:16px;padding:20px 28px;border-bottom:1px solid var(--line);";
+        'display:flex;gap:16px;padding:20px 28px;border-bottom:1px solid var(--line);';
       div.innerHTML = `
         <div style="width:84px;height:84px;flex-shrink:0;background:var(--bg-warm);border-radius:6px;display:grid;place-items:center;overflow:hidden;">
           <img src="${p.img}" alt="" style="width:80%;height:80%;object-fit:contain;" />
         </div>
         <div style="flex:1;min-width:0;">
-          <p style="font-weight:500;font-size:14px;margin:0 0 4px;color:var(--ink-2);">${p.name}</p>
-          <p style="font-size:12px;color:var(--ink-4);margin:0 0 12px;">${p.meta}</p>
+          <p style="font-weight:500;font-size:14px;margin:0 0 12px;color:var(--ink-2);">${p.name}</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <div style="display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;">
               <button data-qty="-1" data-item="${id}" style="width:30px;height:30px;border:none;background:#fff;color:var(--ink-2);cursor:pointer;font-size:16px;">−</button>
@@ -117,60 +137,58 @@ import styles from "./styles.module.css";
       body.appendChild(div);
     });
 
-    const subtotalEl = document.getElementById("cartSubtotal");
-    const totalEl = document.getElementById("cartTotal");
+    const subtotalEl = document.getElementById('cartSubtotal');
+    const totalEl = document.getElementById('cartTotal');
     if (subtotalEl) subtotalEl.textContent = fmt(subtotal);
     if (totalEl) totalEl.textContent = fmt(subtotal);
   }
 
-  function addToCart(id: string) {
+  function addToCart(id) {
     cart[id] = (cart[id] || 0) + 1;
     saveCart();
     renderCart();
     openCart();
-    const badge = document.getElementById("cartCount");
+    const badge = document.getElementById('cartCount');
     if (badge) {
-      badge.style.transform = "scale(1.4)";
+      badge.style.transform = 'scale(1.4)';
       setTimeout(() => {
-        badge.style.transform = "";
+        badge.style.transform = '';
       }, 200);
     }
   }
 
   function openCart() {
-    document.getElementById("cartOverlay")?.classList.add("open");
-    const drawer = document.getElementById("cartDrawer");
+    document.getElementById('cartOverlay')?.classList.add('open');
+    const drawer = document.getElementById('cartDrawer');
     if (drawer) {
-      drawer.classList.add("open");
-      drawer.setAttribute("aria-hidden", "false");
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
     }
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
   }
 
   function closeCart() {
-    document.getElementById("cartOverlay")?.classList.remove("open");
-    const drawer = document.getElementById("cartDrawer");
+    document.getElementById('cartOverlay')?.classList.remove('open');
+    const drawer = document.getElementById('cartDrawer');
     if (drawer) {
-      drawer.classList.remove("open");
-      drawer.setAttribute("aria-hidden", "true");
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     }
-    document.body.style.overflow = "";
+    document.body.style.overflow = '';
   }
 
-  // Add to cart delegation (product card buttons with data-cart-id)
-  document.addEventListener("click", (e) => {
-    const btn = (e.target as Element).closest<HTMLElement>("[data-cart-id]");
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-cart-id]');
     if (btn) {
       e.preventDefault();
-      addToCart(btn.dataset.cartId!);
+      addToCart(btn.dataset.cartId);
       return;
     }
 
-    // Qty change inside drawer
-    const qtyBtn = (e.target as Element).closest<HTMLElement>("[data-qty]");
+    const qtyBtn = e.target.closest('[data-qty]');
     if (qtyBtn) {
-      const id = qtyBtn.dataset.item!;
-      const delta = parseInt(qtyBtn.dataset.qty!);
+      const id = qtyBtn.dataset.item;
+      const delta = parseInt(qtyBtn.dataset.qty);
       cart[id] = (cart[id] || 0) + delta;
       if ((cart[id] ?? 0) <= 0) delete cart[id];
       saveCart();
@@ -178,27 +196,25 @@ import styles from "./styles.module.css";
       return;
     }
 
-    // Remove item
-    const removeBtn = (e.target as Element).closest<HTMLElement>("[data-remove]");
+    const removeBtn = e.target.closest('[data-remove]');
     if (removeBtn) {
-      delete cart[removeBtn.dataset.remove!];
+      delete cart[removeBtn.dataset.remove];
       saveCart();
       renderCart();
       return;
     }
 
-    // Close cart triggers
-    if ((e.target as Element).closest("[data-close-cart]")) {
+    if (e.target.closest('[data-close-cart]')) {
       e.preventDefault();
       closeCart();
     }
   });
 
-  document.getElementById("cartTrigger")?.addEventListener("click", openCart);
-  document.getElementById("cartClose")?.addEventListener("click", closeCart);
-  document.getElementById("cartOverlay")?.addEventListener("click", closeCart);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeCart();
+  document.getElementById('cartTrigger')?.addEventListener('click', openCart);
+  document.getElementById('cartClose')?.addEventListener('click', closeCart);
+  document.getElementById('cartOverlay')?.addEventListener('click', closeCart);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCart();
   });
 
   renderCart();

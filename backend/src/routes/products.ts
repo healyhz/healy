@@ -15,14 +15,12 @@ const adminOnly = createMiddleware(async (c, next) => {
 
 const products = new Hono();
 
-products.use('*', adminOnly);
-
 products.get('/', async (c) => {
   const items = await db.select().from(productSchema).orderBy(productSchema.created_at);
   return c.json(items);
 });
 
-products.post('/', async (c) => {
+products.post('/', adminOnly, async (c) => {
   const { name, slug, description, price } = await c.req.json();
   const [product] = await db
     .insert(productSchema)
@@ -46,7 +44,7 @@ products.get('/:id', async (c) => {
   return c.json(product);
 });
 
-products.put('/:id', async (c) => {
+products.put('/:id', adminOnly, async (c) => {
   const { name, slug, description, price } = await c.req.json();
   const [product] = await db
     .update(productSchema)
@@ -57,7 +55,7 @@ products.put('/:id', async (c) => {
   return c.json(product);
 });
 
-products.delete('/:id', async (c) => {
+products.delete('/:id', adminOnly, async (c) => {
   const [product] = await db
     .delete(productSchema)
     .where(eq(productSchema.id, c.req.param('id')))

@@ -5,14 +5,19 @@
   "scripts": {
     "start": "astro dev",
     "build": "astro check && astro build",
+    "serve": "HOST=0.0.0.0 PORT=80 node ./dist/server/entry.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.9",
+    "@astrojs/node": "10.1.4",
     "astro": "6.4.8",
     "autoprefixer": "10.5.0",
     "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.0"
   },
   "postcss": {
     "plugins": {

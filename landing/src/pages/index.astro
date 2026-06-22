@@ -1,17 +1,25 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header/Header.astro";
-import Footer from "../components/Footer/Footer.astro";
-import CartDrawer from "../components/CartDrawer/CartDrawer.astro";
-import Hero from "./_index/Hero/Hero.astro";
-import Catalog from "./_index/Catalog/Catalog.astro";
-import HowToUse from "./_index/HowToUse/HowToUse.astro";
-import Features from "./_index/Features/Features.astro";
-import UseCases from "./_index/UseCases/UseCases.astro";
-import Partners from "./_index/Partners/Partners.astro";
-import SocialProof from "./_index/SocialProof/SocialProof.astro";
-import Faq from "./_index/Faq/Faq.astro";
-import FinalCta from "./_index/FinalCta/FinalCta.astro";
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header/Header.astro';
+import Footer from '../components/Footer/Footer.astro';
+import CartDrawer from '../components/CartDrawer/CartDrawer.astro';
+import Hero from './_index/Hero/Hero.astro';
+import Catalog from './_index/Catalog/Catalog.astro';
+import HowToUse from './_index/HowToUse/HowToUse.astro';
+import Features from './_index/Features/Features.astro';
+import UseCases from './_index/UseCases/UseCases.astro';
+import Partners from './_index/Partners/Partners.astro';
+import SocialProof from './_index/SocialProof/SocialProof.astro';
+import Faq from './_index/Faq/Faq.astro';
+import FinalCta from './_index/FinalCta/FinalCta.astro';
+import type { Products } from '../types/products';
+
+let products: Products = [];
+
+try {
+  const res = await fetch(`${process.env.API_URL}/api/products`);
+  if (res.ok) products = await res.json();
+} catch (e) {}
 ---
 
 <Layout
@@ -21,7 +29,7 @@ import FinalCta from "./_index/FinalCta/FinalCta.astro";
   <Header />
   <main>
     <Hero />
-    <Catalog />
+    <Catalog products={products} />
     <HowToUse />
     <Features />
     <UseCases />
@@ -31,5 +39,5 @@ import FinalCta from "./_index/FinalCta/FinalCta.astro";
     <FinalCta />
   </main>
   <Footer />
-  <CartDrawer />
+  <CartDrawer products={products} />
 </Layout>

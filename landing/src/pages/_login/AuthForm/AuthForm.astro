@@ -233,8 +233,7 @@ import styles from "./styles.module.css";
     const btn = document.getElementById("loginBtn") as HTMLButtonElement;
     setBtnLoading(btn, true, "Войти");
     try {
-      const apiUrl = (window as any).ENV?.API_URL ?? "";
-      const res = await fetch(`${apiUrl}/api/auth/sign-in/email`, {
+      const res = await fetch(`${window.ENV.API_URL}/api/auth/sign-in/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -244,7 +243,7 @@ import styles from "./styles.module.css";
         }),
       });
       if (res.ok) {
-        window.location.href = (window as any).ENV?.APP_URL ?? "/";
+        window.location.href = window.ENV.APP_URL;
       } else {
         const data = await res.json();
         showFormError("loginError", data.message || "Произошла ошибка. Попробуйте снова.");
@@ -262,8 +261,7 @@ import styles from "./styles.module.css";
     const btn = document.getElementById("registerBtn") as HTMLButtonElement;
     setBtnLoading(btn, true, "Создать аккаунт");
     try {
-      const apiUrl = (window as any).ENV?.API_URL ?? "";
-      const res = await fetch(`${apiUrl}/api/auth/sign-up/email`, {
+      const res = await fetch(`${window.ENV.API_URL}/api/auth/sign-up/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -274,7 +272,7 @@ import styles from "./styles.module.css";
         }),
       });
       if (res.ok) {
-        window.location.href = (window as any).ENV?.APP_URL ?? "/";
+        window.location.href = window.ENV.APP_URL;
       } else {
         const data = await res.json();
         showFormError("registerError", data.message || "Произошла ошибка. Попробуйте снова.");

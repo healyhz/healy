@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -7,6 +7,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const apiUrl = process.env.API_URL;
+const configScript = await fetch(`${apiUrl}/api/config.js`).then((r) => r.text());
 ---
 
 <!doctype html>
@@ -26,6 +28,7 @@ const { title, description } = Astro.props;
     />
     <slot name="head" />
     <title>{title}</title>
+    <script is:inline set:html={configScript} />
   </head>
   <body>
     <slot />
@@ -33,7 +36,15 @@ const { title, description } = Astro.props;
     <div class="sticky-cta">
       <a href="#catalog" class="btn">
         В каталог
-        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg
+          class="arrow"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <path d="M5 12h14m-6-6 6 6-6 6"></path>
         </svg>
       </a>
@@ -135,26 +146,26 @@ const { title, description } = Astro.props;
     (entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add("in");
+          e.target.classList.add('in');
           io.unobserve(e.target);
         }
       });
     },
-    { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
+    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
   );
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-  const banner = document.getElementById("cookieBanner");
-  if (banner && localStorage.getItem("healy_cookie") === "1") {
-    banner.classList.add("hidden");
+  const banner = document.getElementById('cookieBanner');
+  if (banner && localStorage.getItem('healy_cookie') === '1') {
+    banner.classList.add('hidden');
   }
 
-  document.getElementById("cookieAccept")?.addEventListener("click", () => {
-    localStorage.setItem("healy_cookie", "1");
-    document.getElementById("cookieBanner")?.classList.add("hidden");
+  document.getElementById('cookieAccept')?.addEventListener('click', () => {
+    localStorage.setItem('healy_cookie', '1');
+    document.getElementById('cookieBanner')?.classList.add('hidden');
   });
 
-  document.getElementById("cookieCustomize")?.addEventListener("click", () => {
-    document.getElementById("cookieBanner")?.classList.add("hidden");
+  document.getElementById('cookieCustomize')?.addEventListener('click', () => {
+    document.getElementById('cookieBanner')?.classList.add('hidden');
   });
 </script>
