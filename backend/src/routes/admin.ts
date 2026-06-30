@@ -5,6 +5,7 @@ import { auth } from '../auth.js';
 import { db } from '../db.js';
 import { user } from '../schemas/auth-schema.js';
 import { partner } from '../schemas/partner-schema.js';
+import { order } from '../schemas/order-schema.js';
 
 const adminOnly = createMiddleware(async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
@@ -71,6 +72,31 @@ adminRouter.delete('/users/:id/partner', async (c) => {
     .returning();
   if (!row) return c.json({ error: 'Not a partner' }, 404);
   return c.json({ ok: true });
+});
+
+adminRouter.get('/orders', async (c) => {
+  const rows = await db
+    .select({
+      id: order.id,
+      status: order.status,
+      total: order.total,
+      items: order.items,
+      created_at: order.created_at,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      partner: { id: partner.id, referral_code: partner.referral_code, created_at: partner.created_at },
+    })
+    .from(order)
+    .leftJoin(user, eq(user.id, order.user_id))
+    .leftJoin(partner, eq(partner.id, order.partner_id))
+    .orderBy(order.created_at);
+
+  return c.json(
+    rows.map((r) => ({
+      ...r,
+      user: r.user?.id ? r.user : null,
+      partner: r.partner?.id ? r.partner : null,
+    }))
+  );
 });
 
 export default adminRouter;

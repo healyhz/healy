@@ -8,6 +8,7 @@ import claimAdmin from './routes/claim-admin.js';
 import adminRouter from './routes/admin.js';
 import partnerRouter from './routes/partner.js';
 import usersRouter from './routes/users.js';
+import ordersRouter from './routes/orders.js';
 
 const app = new Hono();
 
@@ -30,6 +31,7 @@ app.route('/api/products', products);
 app.route('/api/claim-admin', claimAdmin);
 app.route('/api/admin', adminRouter);
 app.route('/api/partner', partnerRouter);
+app.route('/api/orders', ordersRouter);
 
 app.get('/api/config.js', (c) => {
   const config = {

@@ -40,12 +40,14 @@ const api = {
 
 const adminApi = {
   listUsers: () => apiFetch('/api/admin/users'),
+  listOrders: () => apiFetch('/api/admin/orders'),
   setPartner: (id) => apiFetch(`/api/admin/users/${id}/partner`, { method: 'POST' }),
   revokePartner: (id) => apiFetch(`/api/admin/users/${id}/partner`, { method: 'DELETE' }),
 };
 
 const partnerApi = {
   me: () => apiFetch('/api/partner/me'),
+  orders: () => apiFetch('/api/partner/orders'),
   claim: () => apiFetch('/api/partner/claim', { method: 'POST' }),
   leave: () => apiFetch('/api/partner/me', { method: 'DELETE' }),
 };
@@ -102,6 +104,36 @@ function renderUsersTable(users) {
   `;
 }
 
+function renderOrdersTable(orders, columns = ['user', 'partner']) {
+  if (!orders.length) return '<p>No orders yet.</p>';
+  const rows = orders.map(o => {
+    const itemsSummary = Array.isArray(o.items)
+      ? o.items.map(i => `${escHtml(i.name)} ×${i.qty}`).join(', ')
+      : '—';
+    return `
+      <tr>
+        ${columns.includes('user') ? `<td>${escHtml(o.user?.name || '')} (${escHtml(o.user?.email || '')})</td>` : ''}
+        <td>${itemsSummary}</td>
+        <td>${o.total.toLocaleString()} ₽</td>
+        <td>${escHtml(o.status)}</td>
+        ${columns.includes('partner') ? `<td>${escHtml(o.partner?.referral_code || '—')}</td>` : ''}
+        <td>${new Date(o.created_at).toLocaleDateString('ru-RU')}</td>
+      </tr>
+    `;
+  }).join('');
+  return `
+    <table border="1" cellpadding="6">
+      <thead><tr>
+        ${columns.includes('user') ? '<th>User</th>' : ''}
+        <th>Items</th><th>Total</th><th>Status</th>
+        ${columns.includes('partner') ? '<th>Partner</th>' : ''}
+        <th>Date</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
 function openModal(product = null) {
   const modal = document.getElementById('productModal');
   const form = document.getElementById('productForm');
@@ -147,12 +179,15 @@ async function main() {
       </dialog>
       <h2>Users</h2>
       <div id="usersTable"></div>
+      <h2>Orders</h2>
+      <div id="ordersTable"></div>
     `;
 
     document.getElementById('logoutBtn').addEventListener('click', logout);
 
     const tableDiv = document.getElementById('productsTable');
     const usersDiv = document.getElementById('usersTable');
+    const ordersDiv = document.getElementById('ordersTable');
     const modal = document.getElementById('productModal');
     const form = document.getElementById('productForm');
     let products = [];
@@ -251,7 +286,17 @@ async function main() {
       }
     });
 
-    await Promise.all([refreshProducts(), refreshUsers()]);
+    async function refreshOrders() {
+      ordersDiv.innerHTML = 'Loading…';
+      try {
+        const orders = await adminApi.listOrders();
+        ordersDiv.innerHTML = renderOrdersTable(orders);
+      } catch {
+        ordersDiv.innerHTML = '<p>Failed to load orders.</p>';
+      }
+    }
+
+    await Promise.all([refreshProducts(), refreshUsers(), refreshOrders()]);
   } else {
     root.innerHTML = `
       <p>Logged in as <strong>${escHtml(user.email)}</strong> <button id="logoutBtn">Logout</button></p>
@@ -276,6 +321,8 @@ async function main() {
             <p>Referral code: <strong>${escHtml(data.referral_code)}</strong></p>
             <button id="leavePartnerBtn">Leave Partner Program</button>
             <p id="leavePartnerMsg" style="color:red"></p>
+            <h2>My Orders</h2>
+            <div id="partnerOrdersTable">Loading…</div>
           `;
           document.getElementById('leavePartnerBtn').addEventListener('click', async () => {
             if (!confirm('Are you sure you want to leave the partner program?')) return;
@@ -287,6 +334,14 @@ async function main() {
               msgEl.textContent = 'Could not leave partner program.';
             }
           });
+          try {
+            const orders = await partnerApi.orders();
+            document.getElementById('partnerOrdersTable').innerHTML =
+              renderOrdersTable(orders, ['user']);
+          } catch {
+            document.getElementById('partnerOrdersTable').innerHTML =
+              '<p>Failed to load orders.</p>';
+          }
         } else {
           partnerSection.innerHTML = `
             <p>You are not a partner yet.</p>

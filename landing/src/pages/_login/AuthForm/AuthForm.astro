@@ -224,6 +224,11 @@ import CheckIcon from '../../../assets/icons/check.svg';
     }
   });
 
+  const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+  function afterAuthRedirect() {
+    window.location.href = returnTo || window.ENV.APP_URL;
+  }
+
   document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     clearFormError("loginError");
@@ -240,7 +245,7 @@ import CheckIcon from '../../../assets/icons/check.svg';
         }),
       });
       if (res.ok) {
-        window.location.href = window.ENV.APP_URL;
+        afterAuthRedirect();
       } else {
         const data = await res.json();
         showFormError("loginError", data.message || "Произошла ошибка. Попробуйте снова.");
@@ -269,7 +274,7 @@ import CheckIcon from '../../../assets/icons/check.svg';
         }),
       });
       if (res.ok) {
-        window.location.href = window.ENV.APP_URL;
+        afterAuthRedirect();
       } else {
         const data = await res.json();
         showFormError("registerError", data.message || "Произошла ошибка. Попробуйте снова.");

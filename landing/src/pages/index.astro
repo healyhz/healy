@@ -20,6 +20,8 @@ try {
   const res = await fetch(`${process.env.API_URL}/api/products`);
   if (res.ok) products = await res.json();
 } catch (e) {}
+
+const ref = Astro.url.searchParams.get('ref');
 ---
 
 <Layout
@@ -39,5 +41,5 @@ try {
     <FinalCta />
   </main>
   <Footer />
-  <CartDrawer products={products} />
+  <CartDrawer products={products} ref={ref} />
 </Layout>

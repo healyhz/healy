@@ -3,6 +3,8 @@ import { and, eq, isNull } from 'drizzle-orm';
 import { auth } from '../auth.js';
 import { db } from '../db.js';
 import { partner } from '../schemas/partner-schema.js';
+import { order } from '../schemas/order-schema.js';
+import { user } from '../schemas/auth-schema.js';
 
 const partnerRouter = new Hono();
 
@@ -51,6 +53,36 @@ partnerRouter.delete('/me', async (c) => {
     .returning();
   if (!row) return c.json({ error: 'Not a partner' }, 404);
   return c.json({ ok: true });
+});
+
+partnerRouter.get('/orders', async (c) => {
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  if (!session?.user) return c.json({ error: 'Unauthorized' }, 401);
+
+  const [partnerRow] = await db
+    .select({ id: partner.id })
+    .from(partner)
+    .where(and(eq(partner.id, session.user.id), isNull(partner.deleted_at)));
+
+  if (!partnerRow) return c.json({ error: 'Not a partner' }, 403);
+
+  const rows = await db
+    .select({
+      id: order.id,
+      status: order.status,
+      total: order.total,
+      items: order.items,
+      created_at: order.created_at,
+      user: { id: user.id, name: user.name, email: user.email },
+    })
+    .from(order)
+    .leftJoin(user, eq(user.id, order.user_id))
+    .where(eq(order.partner_id, partnerRow.id))
+    .orderBy(order.created_at);
+
+  return c.json(
+    rows.map((r) => ({ ...r, user: r.user?.id ? r.user : null }))
+  );
 });
 
 export default partnerRouter;
