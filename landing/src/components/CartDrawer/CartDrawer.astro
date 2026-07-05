@@ -203,7 +203,7 @@ const productsMap = Object.fromEntries(
 
   renderCart();
 
-  async function checkout() {
+  async function checkout(isAutoRetry) {
     const btn = document.getElementById('checkoutBtn');
     if (!btn || btn.disabled) return;
     btn.disabled = true;
@@ -212,6 +212,15 @@ const productsMap = Object.fromEntries(
     try {
       const meRes = await fetch(`${window.ENV.API_URL}/api/users/me`, { credentials: 'include' });
       if (meRes.status === 401) {
+        if (isAutoRetry) {
+          // Already bounced through /login once for this checkout attempt and still
+          // unauthenticated - stop here instead of redirecting again forever.
+          localStorage.removeItem('healy_checkout_pending');
+          alert('Не удалось подтвердить вход. Пожалуйста, войдите ещё раз и повторите оформление заказа.');
+          btn.disabled = false;
+          btn.textContent = 'Оформить заказ';
+          return;
+        }
         localStorage.setItem('healy_checkout_pending', '1');
         window.location.href = `/login?returnTo=${encodeURIComponent(window.location.href)}`;
         return;
@@ -251,10 +260,10 @@ const productsMap = Object.fromEntries(
     }
   }
 
-  document.getElementById('checkoutBtn')?.addEventListener('click', checkout);
+  document.getElementById('checkoutBtn')?.addEventListener('click', () => checkout(false));
 
   // Auto-checkout if user was redirected back after login
   if (localStorage.getItem('healy_checkout_pending') === '1' && Object.keys(cart).length > 0) {
-    checkout();
+    checkout(true);
   }
 </script>
